@@ -11,7 +11,10 @@ import org.springframework.data.mongodb.core.mapping.Field;
 public class Books {
  @Id
  private ObjectId id;
- @Field(value = "book_id")
- private String bookId;
+ @Field(value = "name")
  private String name;
+ @Field(value = "author")
+ private String author;
+ @Field(value = "price")
+ private Double price;
 }

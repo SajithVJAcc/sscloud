@@ -14,10 +14,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
-        http.csrf(Customizer.withDefaults())
-                .httpBasic(Customizer.withDefaults())
-                .formLogin(Customizer.withDefaults())
-                .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated());
+//        http.csrf(Customizer.withDefaults())
+//                .httpBasic(Customizer.withDefaults())
+//                .formLogin(Customizer.withDefaults())
+//                .authorizeHttpRequests(authorize -> authorize.anyRequest().authenticated());
+        http
+                .csrf(csrf -> csrf.disable())   // disable CSRF for APIs
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/sscloud/**").permitAll() // allow testing endpoints
+                        .anyRequest().authenticated()
+                )
+                .httpBasic(Customizer.withDefaults()); // basic auth for testing
+
         return http.build();
     }
 }

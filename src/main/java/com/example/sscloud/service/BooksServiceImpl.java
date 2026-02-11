@@ -4,10 +4,11 @@ import com.example.sscloud.dto.BookDto;
 import com.example.sscloud.entity.Books;
 import com.example.sscloud.repository.BooksRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Service
 public class BooksServiceImpl implements BooksService{
     private BooksRepository booksRepository;
 
@@ -24,7 +25,7 @@ public class BooksServiceImpl implements BooksService{
 
         booksRepository.findAll().forEach(booksList::add);
         for (Books books:booksList) {
-            BookDto bookDto= BookDto.builder().id(books.getId()).bookId(books.getBookId()).name(books.getName()).build();
+            BookDto bookDto= BookDto.builder().id(books.getId()).name(books.getName()).author(books.getAuthor()).price(books.getPrice()).build();
             bookDtoList.add(bookDto);
         }
 
@@ -34,7 +35,7 @@ public class BooksServiceImpl implements BooksService{
     @Override
     public String saveBooks(BookDto bookDto) {
         Books books= new Books();
-        books.setBookId(bookDto.getBookId());
+        books.setAuthor(bookDto.getAuthor());
         books.setName(bookDto.getName());
         try {
             booksRepository.save(books);
@@ -47,7 +48,7 @@ public class BooksServiceImpl implements BooksService{
     @Override
     public String saveBooks(String id, String name) {
         List<Books> booksList = new ArrayList<>();
-        booksRepository.findBooksByBookId(id).forEach(booksList::add);
+        booksRepository.findBooksByName(name).forEach(booksList::add);
         booksList.forEach(
                 books -> {
                     books.setName(name);
@@ -55,5 +56,15 @@ public class BooksServiceImpl implements BooksService{
                 }
         );
         return "Success";
+    }
+
+    @Override
+    public List<BookDto> getAllBooksBooksByName(String name) {
+        List<Books> booksList = new ArrayList<>();
+        List<BookDto>bookDtoList=new ArrayList<>();
+        booksRepository.findBooksByName(name).forEach(booksList::add);
+        booksList.forEach(books ->{ BookDto bookDto= BookDto.builder().id(books.getId()).name(books.getName()).author(books.getAuthor()).price(books.getPrice()).build();
+        bookDtoList.add(bookDto); });
+        return bookDtoList;
     }
 }

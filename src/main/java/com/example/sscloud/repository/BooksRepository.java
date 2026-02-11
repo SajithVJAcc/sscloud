@@ -7,6 +7,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 public interface BooksRepository extends MongoRepository<Books, ObjectId> {
 
-    Iterable<Books> findBooksByBookId(String id);
+    Iterable<Books> findBooksByName(String name);
 
 }
