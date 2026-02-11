@@ -9,6 +9,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Objects;
 
 
 public class AuthFilter extends OncePerRequestFilter {
@@ -25,6 +26,6 @@ public class AuthFilter extends OncePerRequestFilter {
 
     }
     private boolean isUserAllowed(String tenantId){
-        return tenantId == "demo";
+        return Objects.equals(tenantId, "demo");
     }
 }

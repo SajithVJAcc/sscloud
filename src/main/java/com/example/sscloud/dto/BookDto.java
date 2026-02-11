@@ -10,6 +10,7 @@ import java.io.Serializable;
 @Data
 public class BookDto implements Serializable {
     private ObjectId id;
-    private String bookId;
     private String name;
+    private String author;
+    private Double price;
 }

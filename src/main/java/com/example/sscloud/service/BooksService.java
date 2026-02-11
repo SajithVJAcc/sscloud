@@ -11,4 +11,6 @@ public interface BooksService {
     String saveBooks(BookDto bookDto);
 
     String saveBooks(String id,String name);
+
+    List<BookDto> getAllBooksBooksByName(String name);
 }
